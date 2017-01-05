@@ -1,0 +1,71 @@
+/* Main Config File for TofPet ASIC */
+
+@include "/home/musico/TOPEM/EndoProbe/acq/out/test_1610/delay_scan/config_default.txt"
+
+TofPet :	// up to 6 chip in the system
+(
+// Chip 0
+	{
+		ch_31_0_enable_mask = 0xFL;
+		ch_63_32_enable_mask = 0x0L;
+	},
+
+// Chip 1
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	},
+
+// Chip 2
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	},
+
+// Chip 3
+	{
+		ch_31_0_enable_mask = 0xFL;
+		ch_63_32_enable_mask = 0x0L;
+	}
+/*
+// Chip 4
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	},
+
+// Chip 5
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	}
+*/
+);
+
+Run: 
+{
+	hw_config_only = false;
+
+	chip_present_mask = 0x09;	// 0x00 - 0x3f, first chip must be always present
+
+
+	inet_addr = "193.206.144.243";
+
+	file_prefix = "out/test_1701/delay_scan/delay_31";
+
+	daq_mode = "hw_tdca";	// event, hw_fetp, sw_fetp, hw_tdca, sw_tdca, dark_count
+	daq_format = "bin";	// hex, dec, bin
+	skip_empty_events = true;
+	test_pulse_polarity = 1;	// 1 = active high
+	test_pulse_coarse_delay = 3;	// 0..1023: n x 6.25 ns
+	test_pulse_fine_delay = 1;	// 0..31	// from 0 to 5 ns = 156 ps / step
+
+	test_pulse_zero_width = 8;	// 0..127, unit is 6.4 us; test_pulse = 1 always for 6.25 x 128 = 800 ns
+					// unit is 6.4 us, test_pulse = 1 always for 6.4 x 4 = 25.6 us
+	test_pulse_duration = 10;	// 0..255: 0 = 1 pulse, otherwise keep TEST_COMMAND line high for given msec
+
+	progress_step = 10;
+	time_preset = 30;
+	event_preset = 10000;
+};
+

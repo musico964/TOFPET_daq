@@ -1,0 +1,73 @@
+/* Main Config File for TofPet ASIC */
+
+@include "config_default.txt"
+
+TofPet :	// up to 6 chip in the system
+(
+// Chip 0
+	{
+		ch_31_0_enable_mask = __CH_MASK0__L;
+		ch_63_32_enable_mask = __CH_MASK1__L;
+	},
+
+// Chip 1
+	{
+		ch_31_0_enable_mask = __CH_MASK0__L;
+		ch_63_32_enable_mask = __CH_MASK1__L;
+	},
+
+// Chip 2
+	{
+		ch_31_0_enable_mask = __CH_MASK0__L;
+		ch_63_32_enable_mask = __CH_MASK1__L;
+	},
+
+// Chip 3
+	{
+		ch_31_0_enable_mask = __CH_MASK0__L;
+		ch_63_32_enable_mask = __CH_MASK1__L;
+	},
+
+// Chip 4
+	{
+		ch_31_0_enable_mask = __CH_MASK0__L;
+		ch_63_32_enable_mask = __CH_MASK1__L;
+	},
+
+// Chip 5
+	{
+		ch_31_0_enable_mask = __CH_MASK0__L;
+		ch_63_32_enable_mask = __CH_MASK1__L;
+	}
+);
+
+Run: 
+{
+	hw_config_only = false;
+
+	chip_present_mask = 0x05;	// 0x00 - 0x3f
+
+	inet_addr = "193.206.144.243";
+
+	file_prefix = "out/test_150427/__FNAME__";
+
+	daq_mode = "dark_count";	// event, hw_fetp, sw_fetp, hw_tdca, sw_tdca, dark_count
+	daq_format = "hex";	// hex, dec, bin
+	skip_empty_events = true;
+
+	progress_step = 20;
+	time_preset = 2;
+	event_preset = 1000;
+	single_scan = false;	// vary both thresholds together (t_thr)
+
+	# Time discriminator threshold
+	t_thr_start = 40;	// Integer numbers form 0 to 63: 0 = max, 63 = min
+	t_thr_stop =  63;
+	t_thr_step = 1;
+
+	# Energy discriminator threshold
+	e_thr_start = 20;	// Integer numbers form 0 to 63: 0 = max, 63 = min
+	e_thr_stop =  20;
+	e_thr_step = 10;
+};
+

@@ -1,0 +1,12 @@
+*.o
+*.a
+*.d
+*.so
+*.tar.gz
+.*.swp
+*~
+out/
+client_udp
+Daq
+server_udp
+

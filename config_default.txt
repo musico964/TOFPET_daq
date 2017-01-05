@@ -1,0 +1,97 @@
+/* Default Config File for TofPet ASIC */
+
+default :
+{
+	TofPet :	// up to 6 chip in the system
+	({
+		ch_31_0_enable_mask = 0x0L;
+		ch_63_32_enable_mask = 0x0L;
+
+		global :
+		{
+			TDCcomp = 32;			// [109:104]: 6 bit
+			compvcas = 32;			// [103:98]: 6 bit
+			TDCiref = 32;			// [97:92]: 6 bit
+			TDCtac = 32;			// [91:86]: 6 bit
+			lvlshft = 10;			// [85:80]: 6 bit OPTIM
+//			lvlshft = 13;			// [85:80]: 6 bit DEFAULT
+			vib2 = 20;			// [79:74]: 6 bit OPTIM
+//			vib2 = 3;			// [79:74]: 6 bit DEFAULT
+			vib1 = 0;			// [73:68]: 6 bit OPTIM
+//			vib1 = 3;			// [73:68]: 6 bit DEFAULT
+			sipm_iDAC_range = 32;		// [67:62]: 6 bit OPTIM
+//			sipm_iDAC_range = 5;		// [67:62]: 6 bit DEFAULT	step (LSB)
+			sipm_iDAC_dcstart = 38;		// [61:56]: 6 bit OPTIM
+//			sipm_iDAC_dcstart = 45;		// [61:56]: 6 bit DEFAULT	offset
+			disc_iDAC_range = 32;		// [55:50]: 6 bit OPTIM
+//			disc_iDAC_range = 35;		// [55:50]: 6 bit DEFAULT	step (LSB)
+//			disc_iDAC_range = 45;		// [55:50]: 6 bit TRIAL
+			disc_iDAC_dcstart = 45;		// [49:44]: 6 bit OPTIM
+//			disc_iDAC_dcstart = 35;		// [49:44]: 6 bit DEFAULT	offset
+//			disc_iDAC_dcstart = 50;		// [49:44]: 6 bit TRIAL
+//			postamp = 44;			// [43:38]: 6 bit DEFAULT	ampli baseline
+			postamp = 40;			// [43:38]: 6 bit TRIAL
+			FE_discibias = 20;		// [37:32]: 6 bit OPTIM
+//			FE_discibias = 43;		// [37:32]: 6 bit DEFAULT
+			FE_discvcas = 42;		// [31:26]: 6 bit OPTIM
+//			FE_discvcas = 32;		// [31:26]: 6 bit DEFAULT
+			clk_o_enable = true;		// [25]
+			test_pattern = false;		// [24]
+			external_veto = false;		// [23]
+			event_data_mode = true;		// [22]
+			counter_interval = 0;		// [21:18]: 4 bit from 2^10 to 2^25 clock periods
+			count_trig_error = 0;		// [17]
+			fine_counter_kf = 0;		// [16:9]: 8 bit
+			fine_counter_saturate = 0;	// [8]
+			TAC_refresh = 3;		// [7:4]: 4 bit
+			external_pulse_enable = true;	// [3]	// overridden by daq_mode
+			DDR_mode = false;		// [2]
+			TX_mode = 0;			// [1:0]: 2 bit // 0 = x1 mode, 1 = x2 mode, 2 = training
+
+		};
+
+		global_test :
+		{
+			calib_sw = 63;			// [6:1]
+			global_calib_enable = true;	// [0]	// overridden by daq_mode
+		};
+
+		test_pulse :	// WriteTestCommand()
+		{
+			interval_between_pulses = 7;	// [25:18]: 8 bit
+			pulse_length = 23;		// [17:10]: 8 bit
+			number_of_pulses = 12;		// [9:0]: 10 bit
+		};
+
+		channel :	// 64 channels per chip
+		({
+			d_E = 7;			// [52:48]: 5 bit DEFAULT
+			test_cfg = 3;			// [47:46]: 2 bit
+			test_T_EN = true;		// [45]	// overridden by daq_mode
+			test_E_EN = true;		// [44]	// overridden by daq_mode
+			sync = true;			// [43] set true for "dark_count" mode, overridden by daq_mode
+			gtest = false;			// [42]	// overridden by daq_mode
+			deadtime_EN = false;		// [41]
+			deadtime = 0;			// [40]
+			meta_cfg = 1;			// [39:38]: 2 bit
+			latch_cfg = 1;			// [37:36]+[30]
+			d_T = 7;			// [35:31]: 5 bit
+			cgate_cfg = 7;			// [29:27]: 3 bit
+			g0_bar = 3;			// [26:25]	// TIA gain 625, 1200, 1900, 2500 ohm
+			sh_bar = 1;			// [24:23]	// shaping time 7.5, 5.0, 2.0, 0.0 ns
+			sw_E = 5			// [22:17]: 6 bit // energy discr thr
+			sw_T = 58;			// [16:11]: 6 bit // timing discr thr
+//			vbl = 31;			// [10:7]+[3:2]: 6 bit  // SiPM input DC voltage DEFAULT
+			vbl = 52;			// [10:7]+[3:2]: 6 bit  // SiPM input DC voltage OPTIM
+			inp_pol = 0;			// [6]		  // 0 for anode
+			test_mode = 0;			// [5]: 1 to put signals on TRIG1,TRIG2 pin
+			tmjitter = 0;			// [4]: in conjunction with test_mode
+			praedictio = true;		// [1]: set false for "dark_count" mode, overridden by daq_mode
+			ch_enable = true;		// [0]	// Always 1; overridden
+			ch_calib_enable = true;		// overridden by daq_mode
+		});
+	});
+
+};
+
+

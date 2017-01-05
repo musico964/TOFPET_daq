@@ -1,0 +1,84 @@
+/* Main Config File for TofPet ASIC */
+
+@include "config_default.txt"
+
+TofPet :	// up to 6 chip in the system
+(
+// Chip 0
+	{
+		ch_31_0_enable_mask = 0xFL;
+		ch_63_32_enable_mask = 0x0L;
+/*
+		global_test : { calib_sw = 10; };
+
+		channel :	// 64 channels per chip
+		(
+		{sw_T = 60;},{sw_T = 60;},{sw_T = 60;},{sw_T = 60;},{sw_T = 52;},{sw_T = 51;},{sw_T = 52;},{sw_T = 50;},
+		{sw_T = 52;},{sw_T = 51;},{sw_T = 51;},{sw_T = 53;},{sw_T = 52;},{sw_T = 50;},{sw_T = 51;},{sw_T = 52;},
+		{sw_T = 52;},{sw_T = 51;},{sw_T = 52;},{sw_T = 52;},{sw_T = 53;},{sw_T = 51;},{sw_T = 52;},{sw_T = 54;},
+		{sw_T = 52;},{sw_T = 52;},{sw_T = 49;},{sw_T = 51;},{sw_T = 50;},{sw_T = 51;},{sw_T = 51;},{sw_T = 48;},
+		{sw_T = 51;},{sw_T = 53;},{sw_T = 51;},{sw_T = 50;},{sw_T = 50;},{sw_T = 48;},{sw_T = 51;},{sw_T = 52;},
+		{sw_T = 51;},{sw_T = 50;},{sw_T = 50;},{sw_T = 49;},{sw_T = 51;},{sw_T = 51;},{sw_T = 53;},{sw_T = 50;},
+		{sw_T = 51;},{sw_T = 50;},{sw_T = 50;},{sw_T = 51;},{sw_T = 51;},{sw_T = 50;},{sw_T = 53;},{sw_T = 51;},
+		{sw_T = 50;},{sw_T = 49;},{sw_T = 51;},{sw_T = 47;},{sw_T = 50;},{sw_T = 50;},{sw_T = 50;},{sw_T = 48;}
+		);
+*/
+	},
+
+// Chip 1
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	},
+
+// Chip 2
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	},
+
+// Chip 3
+	{
+		ch_31_0_enable_mask = 0xFL;
+		ch_63_32_enable_mask = 0x0L;
+	}
+/*
+// Chip 4
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	},
+
+// Chip 5
+	{
+		ch_31_0_enable_mask = 0x1L;
+		ch_63_32_enable_mask = 0x0L;
+	}
+*/
+);
+
+Run: 
+{
+	hw_config_only = false;
+
+	chip_present_mask = 0x08;	// 0x00 - 0x3f, first chip must be always present
+
+
+	inet_addr = "193.206.144.243";
+
+	file_prefix = "out/test_1701/test";
+
+	daq_mode = "hw_tdca";	// event, hw_fetp, sw_fetp, hw_tdca, sw_tdca, dark_count
+	daq_format = "bin";	// hex, dec, bin
+	skip_empty_events = true;
+	test_pulse_polarity = 1;	// 1 = active high
+	test_pulse_coarse_delay = 3;	// 0..1023: n x 6.25 ns
+	test_pulse_fine_delay = 0;	// 0..31	// from 0 to 5 ns = 156 ps / step
+	test_pulse_zero_width = 8;	// 0..127, unit is 6.4 us; test_pulse = 1 always for 6.25 x 128 = 800 ns
+	test_pulse_duration = 0;	// 0..255: 0 = 1 pulse, otherwise keep TEST_COMMAND line high for given msec
+
+	progress_step = 10;
+	time_preset = 10;
+	event_preset = 1000;
+};
+
